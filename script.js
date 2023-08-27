@@ -1,33 +1,26 @@
-const getSumBtn = document.createElement("button");
-getSumBtn.append("Get Total Price");
-document.body.appendChild(getSumBtn);
+ function calculateTotalPrice() {
+      const priceElements = document.querySelectorAll('.price');
+      let total = 0;
 
-const getSum = () => {
-//Add your code here
+      priceElements.forEach(priceElement => {
+        total += parseFloat(priceElement.textContent);
+      });
 
+      return total.toFixed(2);
+    }
 
-Function to calculate and update the total price
-function updateTotalPrice() {
-  const prices = document.querySelectorAll('.price');
-  let total = 0;
+    function updateTotalRow() {
+      const totalRow = document.querySelector('#grocery-table tfoot');
+      if (totalRow) {
+        totalRow.remove();
+      }
 
-  prices.forEach(priceElement => {
-    total += parseFloat(priceElement.textContent);
-  });
+      const table = document.getElementById('grocery-table');
+      const newRow = table.createTFoot().insertRow();
+      const totalCell = newRow.insertCell();
+      totalCell.setAttribute('colspan', '2');
+      totalCell.textContent = `Total Price: $${calculateTotalPrice()}`;
+    }
 
-  const totalRow = document.createElement('tr');
-  totalRow.innerHTML = `<td><strong>Total:</strong></td><td>${total.toFixed(2)}</td>`;
-
-  const table = document.getElementById('groceryTable');
-  table.appendChild(totalRow);
-}
-
-// Call the function initially to calculate and display the total price
-updateTotalPrice();
-
-	
-  
-};
-
-getSumBtn.addEventListener("click", getSum);
-
+    // Call the updateTotalRow function initially and whenever prices change
+    updateTotalRow();
